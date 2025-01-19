@@ -12,6 +12,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       database: 'simulador_ir',
       autoLoadEntities: true,
       synchronize: false,
+      entities: [`${__dirname}/**/*.entity{.ts,.js}`],
+      migrations: [`${__dirname}/migrations/*{.ts,*js}`],
+      migrationsRun: true,
     }),
   ],
 })
