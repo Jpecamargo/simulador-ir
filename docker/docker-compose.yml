@@ -1,5 +1,16 @@
 version: '3.8'
 services:
+  postgres:
+    image: postgres:latest
+    restart: always
+    container_name: postgres
+    environment:
+      POSTGRES_DB: simulador_ir
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+      
   frontend:
     build:
       context: ../apps/frontend
@@ -18,13 +29,6 @@ services:
       - "4000:4000"
     volumes:
       - ../apps/backend:/app
+    depends_on:
+      - postgres
     command: ["npm", "run", "start:dev"]
-
-  postgres:
-    image: postgres:latest
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: simulador_ir
-    ports:
-      - "5432:5432"
