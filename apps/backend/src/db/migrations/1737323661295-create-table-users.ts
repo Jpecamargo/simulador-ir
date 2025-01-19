@@ -20,6 +20,11 @@ export class CreateTableUser1737313365794 implements MigrationInterface {
             isNullable: false,
           },
           {
+            name: 'name',
+            type: 'varchar',
+            isNullable: false,
+          },
+          {
             name: 'password',
             type: 'varchar',
             isNullable: false,
