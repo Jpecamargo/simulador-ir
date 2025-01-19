@@ -19,6 +19,11 @@ export class CreateTableIrHistory1737313404723 implements MigrationInterface {
             isNullable: false,
           },
           {
+            name: 'year',
+            type: 'int',
+            isNullable: false,
+          },
+          {
             name: 'salary',
             type: 'float',
             isNullable: false,
