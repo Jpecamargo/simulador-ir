@@ -15,7 +15,7 @@ export class TaxesService {
   }
 
   async findAllByUser(user_id: number): Promise<Tax[]> {
-    const taxes = await this.taxRepository.find({ where: { user_id } });
+    const taxes = await this.taxRepository.find({ where: { user_id, deleted_at: null } , order: { year: 'DESC' } });
     return taxes;
   }
 
