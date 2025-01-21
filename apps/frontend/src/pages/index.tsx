@@ -33,7 +33,7 @@ export default function Home() {
   };
 
   return (
-    <div className="w-full flex flex-col items-center justify-center px-4">
+    <div className="w-full h-screen flex flex-col items-center justify-center px-4">
       <div className="flex flex-col items-center bg-slate-100 w shadow-lg w-full h-[500px] sm:w-96 rounded-lg py-6 px-4">
         <div className="flex flex-col items-center">
           <h1 className="text-3xl font-bold text-gray-900 sm:truncate sm:text-4xl mb-6">

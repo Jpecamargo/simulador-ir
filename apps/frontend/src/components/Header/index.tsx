@@ -5,8 +5,10 @@ import Image from "next/image";
 import Menu from "../../../public/menu-icon.svg";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
+import { useAuth } from "../../../contexts/authContext";
 
 export default function Header() {
+  const { logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
   const buttonStyle = {
@@ -60,7 +62,7 @@ export default function Header() {
                 Histórico
               </Link>
             </li>
-            <button className="text-red-500 mt-4 sm:mt-0">Sair</button>
+            <button className="text-red-500 mt-4 sm:mt-0" onClick={()=>{logout()}}>Sair</button>
           </ul>
         </div>
       </div>

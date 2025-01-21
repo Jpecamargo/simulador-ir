@@ -1,26 +1,40 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { setCookie, parseCookies, destroyCookie } from "nookies";
 import { api } from "../services/api";
+import { useRouter } from "next/router";
 
 interface AuthContextProps {
   isAuthenticated: boolean;
   login: (email: string, password: string) => Promise<void>;
+  register: (name: string, email: string, password: string) => Promise<void>;
   logout: VoidFunction;
 }
 
 const AuthContext = createContext<AuthContextProps>({
   isAuthenticated: false,
   login: async () => {},
+  register: async () => {},
   logout: () => {},
 });
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const { "simuladorIR.token": token } = parseCookies();
     setIsAuthenticated(!!token);
   }, []);
+
+  const register = async (name: string, email: string, password: string) => {
+    try {
+      await api.post("/auth/sign-up", { name, email, password });
+      router.push("/");
+    } catch (error) {
+      console.error("Erro ao fazer registro:", error);
+      throw new Error("Falha no registro");
+    }
+  };
 
   const login = async (email: string, password: string) => {
     try {
@@ -34,6 +48,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
 
       setIsAuthenticated(true);
+      router.push("/historico");
     } catch (error) {
       console.error("Erro ao fazer login:", error);
       throw new Error("Falha na autenticação");
@@ -43,10 +58,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const logout = () => {
     destroyCookie(undefined, "simuladorIR.token");
     setIsAuthenticated(false);
+    router.push("/");
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );
