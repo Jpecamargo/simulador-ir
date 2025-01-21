@@ -12,7 +12,7 @@ export class TaxesController {
   }
 
   @Get('all/:user_id')
-  async findAllByUser(@Param('id') user_id: number) {
+  async findAllByUser(@Param('user_id') user_id: number) {
     return this.taxesService.findAllByUser(user_id);
   }
 
