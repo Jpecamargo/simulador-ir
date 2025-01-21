@@ -6,6 +6,7 @@ import { useAuth } from "../../../contexts/authContext";
 import { useEffect, useState } from "react";
 import { api } from "../../../services/api";
 import { Tax } from "../../../@types/taxes";
+import TaxesItemList from "@/components/TaxesItemList";
 
 export default function Historico() {
   const { user } = useAuth();
@@ -24,16 +25,26 @@ export default function Historico() {
       <Container title="Histórico" description="Veja todas as suas declarações">
         {taxes.length > 0 ? (
           taxes.map((tax: Tax) => (
-            <div key={tax.id}>
-              <p>Valor: {tax.salary}</p>
-              <p>Descrição: {tax.year}</p>
-              <p>Usuário: {tax.user_id}</p>
-            </div>
+            <TaxesItemList
+              id={tax.id}
+              user_id={tax.user_id}
+              year={tax.year}
+              salary={tax.salary}
+              dependents={tax.dependents}
+              education_expenses={tax.education_expenses}
+              health_expenses={tax.health_expenses}
+              irrf={tax.irrf}
+            />
           ))
         ) : (
           <div className="text-lg">
-            <p>Parece que você ainda não tem nenhuma declaração registrada 😢</p>
-            <p>Clique em <b>"Nova declaração"</b> na barra de navegação para cadastrar suas simulações de declaração do imposto de renda"</p>
+            <p>
+              Parece que você ainda não tem nenhuma declaração registrada 😢
+            </p>
+            <p>
+              Clique em <b>"Nova declaração"</b> na barra de navegação para
+              cadastrar suas simulações de declaração do imposto de renda"
+            </p>
           </div>
         )}
       </Container>
