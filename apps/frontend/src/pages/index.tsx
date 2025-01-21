@@ -4,6 +4,8 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuth } from "../../contexts/authContext";
 import Input from "@/components/Form/Input";
+import { GetServerSideProps } from "next";
+import { parseCookies } from "nookies";
 
 const schema = yup.object().shape({
   email: yup.string().email("Email inválido").required("Email é obrigatório"),
@@ -70,3 +72,21 @@ export default function Home() {
     </div>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const cookies = parseCookies(ctx);
+  const token = cookies['simuladorIR.token'];
+
+  if (token) {
+      return {
+          redirect: {
+              destination: '/historico',
+              permanent: false,
+          },
+      };
+  }
+
+  return {
+      props: {},
+  };
+};
