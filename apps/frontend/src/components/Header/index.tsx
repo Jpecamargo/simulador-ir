@@ -19,14 +19,10 @@ export default function Header() {
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900 w-full">
       <div className="flex flex-wrap items-center justify-between mx-auto p-4">
-        <a
-          href="https://flowbite.com/"
-          className="flex items-center space-x-3 rtl:space-x-reverse"
-        >
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-            Simulador IR
-          </span>
-        </a>
+        <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+          Simulador IR
+        </span>
+
         <button
           type="button"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -64,7 +60,7 @@ export default function Header() {
                 Histórico
               </Link>
             </li>
-            <button className="text-red-500">Sair</button>
+            <button className="text-red-500 mt-4 sm:mt-0">Sair</button>
           </ul>
         </div>
       </div>
