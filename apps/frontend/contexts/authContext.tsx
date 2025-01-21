@@ -29,10 +29,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     const { "simuladorIR.token": token } = parseCookies();
-    const decodedToken: { email: string; sub: string } = jwtDecode(token);
-    const { email: decodedEmail, sub } = decodedToken;
-
-    setUser({ email: decodedEmail, sub });
+    if (token) {
+      const decodedToken: { email: string; sub: string } = jwtDecode(token);
+      const { email: decodedEmail, sub } = decodedToken;
+      setUser({ email: decodedEmail, sub });
+    }
     setIsAuthenticated(!!token);
   }, []);
 

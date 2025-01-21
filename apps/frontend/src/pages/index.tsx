@@ -6,6 +6,7 @@ import { useAuth } from "../../contexts/authContext";
 import Input from "@/components/Form/Input";
 import { GetServerSideProps } from "next";
 import { parseCookies } from "nookies";
+import { useRouter } from "next/navigation";
 
 const schema = yup.object().shape({
   email: yup.string().email("Email inválido").required("Email é obrigatório"),
@@ -17,6 +18,7 @@ const schema = yup.object().shape({
 });
 
 export default function Home() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -67,6 +69,12 @@ export default function Home() {
               Entrar
             </button>
           </form>
+            <button
+              className="bg-teal-500 text-white rounded-md px-4 py-2 mt-4 w-full"
+              onClick={() => {router.push('/registro')}}
+            >
+              Cadastrar
+            </button>
         </div>
       </div>
     </div>
