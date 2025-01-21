@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Tax } from './entities/tax.entity';
-import { Repository } from 'typeorm';
+import { IsNull, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class TaxesService {
   }
 
   async findAllByUser(user_id: number): Promise<Tax[]> {
-    const taxes = await this.taxRepository.find({ where: { user_id, deleted_at: null } , order: { year: 'DESC' } });
+    const taxes = await this.taxRepository.find({ where: { user_id, deleted_at: IsNull() } , order: { year: 'DESC' } });
     return taxes;
   }
 
