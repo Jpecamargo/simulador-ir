@@ -5,10 +5,20 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { DbModule } from './db/db.module';
 import { TaxesModule } from './taxes/taxes.module';
+import { ConfigModule } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { JwtStrategy } from './auth/jwt.strategy';
 
 @Module({
-  imports: [UsersModule, AuthModule, DbModule, TaxesModule],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    UsersModule,
+    AuthModule,
+    DbModule,
+    TaxesModule,
+  ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, {provide: APP_GUARD, useClass: JwtAuthGuard}, JwtStrategy],
 })
 export class AppModule {}
