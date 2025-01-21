@@ -1,8 +1,9 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
-import { RegisterUserDto } from './dto/auth.dto';
+import { RegisterUserDto } from './dto/register.dto';
 import * as bcrypt from 'bcrypt';
+import { LoginUserDto } from './dto/login.dto';
 
 @Injectable()
 export class AuthService {
@@ -26,14 +27,14 @@ export class AuthService {
     });
   }
 
-  async login(email: string, password: string) {
-    const user = await this.usersService.findUserByEmail(email);
+  async login(loginDto: LoginUserDto) {
+    const user = await this.usersService.findUserByEmail(loginDto.email);
 
     if (!user) {
       return null;
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await bcrypt.compare(loginDto.password, user.password);
 
     if (!isPasswordValid) {
       return null;
