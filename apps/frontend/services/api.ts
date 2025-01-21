@@ -1,13 +1,12 @@
 import axios from "axios"
-import nookies from "nookies";
+import nookies, { parseCookies } from "nookies";
 
 export const api = axios.create({
     baseURL: "http://localhost:4000"
 });
 
 api.interceptors.request.use(config => {
-    const cookies = nookies.get();
-    const token = cookies.token;
+    const { "simuladorIR.token": token } = parseCookies();
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }
