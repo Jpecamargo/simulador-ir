@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
 import { RegisterUserDto } from './dto/register.dto';
@@ -31,13 +31,13 @@ export class AuthService {
     const user = await this.usersService.findUserByEmail(loginDto.email);
 
     if (!user) {
-      return null;
+      throw new BadRequestException('Email não encontrado');
     }
 
     const isPasswordValid = await bcrypt.compare(loginDto.password, user.password);
 
     if (!isPasswordValid) {
-      return null;
+      throw new BadRequestException('Senha inválida');
     }
 
     const payload = { email: user.email, sub: user.id };
